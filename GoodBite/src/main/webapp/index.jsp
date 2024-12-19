@@ -17,6 +17,12 @@
                 <!-- 의사 로그인 -->
                 의사 로그인 - ♥${doctorName}님 환영합니다♥&nbsp;<a href="${pageContext.request.contextPath}/doctor/doctorLogout.aws">로그아웃하려면 클릭하세요.</a>
             </c:if>
+
+            <c:if test="${!empty sessionScope.didx}">
+                <!-- 의사 로그인 -->
+                인턴/레지던트 로그인 - ♥${doctorName}님 환영합니다♥&nbsp;<a href="${pageContext.request.contextPath}/doctor/doctorLogout.aws">로그아웃하려면 클릭하세요.</a>
+            </c:if>
+
         </div>
 
         <!-- 상단 제목 -->
