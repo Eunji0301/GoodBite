@@ -44,6 +44,24 @@ a{
 	border-radius: 100%;
 }
 
+.headerMenu{
+font-family: 'Inter';
+font-style: normal;
+font-weight: 650;
+font-size : 18px;
+line-height: 150%;
+color: #000000;	
+}
+/* Ã¿¸°Áö/Ä¿¹Â´ÏÆ¼ */
+
+position: absolute;
+width: 179px;
+height: 38.05px;
+left: 1410px;
+top: 129.25px;
+
+
+
 
 
 
