@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS USER;
 -- 유저가 선택한 챌린지를 진행하고 실행했을 때 인증을 남길 수 있는 테이블
 CREATE TABLE CHALLENGE_AUTH
 (
-	caId int unsigned NOT NULL AUTO_INCREMENT,
+	caIdx int unsigned NOT NULL AUTO_INCREMENT,
 	-- 유저 챌린지 인증 사진
 	-- 
 	caImage text NOT NULL COMMENT '유저 챌린지 인증 사진
@@ -52,17 +52,19 @@ CREATE TABLE CHALLENGE_AUTH
 	-- 
 	caDelDate datetime NOT NULL COMMENT '유저 챌린지 삭제 날짜
 ',
+	-- 해당 정보 생성 날짜
+	caCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
 	-- 챌린지 인덱스
 	-- 
-	ciId int NOT NULL COMMENT '챌린지 인덱스
+	ciIdx int NOT NULL COMMENT '챌린지 인덱스
 ',
 	-- 유저 챌린지 인덱스
 	-- 
-	cuId int unsigned NOT NULL COMMENT '유저 챌린지 인덱스
+	cuIdx int unsigned NOT NULL COMMENT '유저 챌린지 인덱스
 ',
-	PRIMARY KEY (caId)
+	PRIMARY KEY (caIdx)
 ) COMMENT = '유저가 선택한 챌린지를 진행하고 실행했을 때 인증을 남길 수 있는 테이블';
 
 
@@ -71,7 +73,7 @@ CREATE TABLE CHALLENGE_INFO
 (
 	-- 챌린지 인덱스
 	-- 
-	ciId int NOT NULL AUTO_INCREMENT COMMENT '챌린지 인덱스
+	ciIdx int NOT NULL AUTO_INCREMENT COMMENT '챌린지 인덱스
 ',
 	-- 챌린지명
 	-- 
@@ -113,9 +115,11 @@ CREATE TABLE CHALLENGE_INFO
 	-- 
 	ciRole enum('ADMIN','USER') NOT NULL COMMENT '첼린지 카테고리(유저, 관리자 분류)
 ',
+	-- 해당 정보 생성 날자
+	ciCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날자',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
-	PRIMARY KEY (ciId)
+	PRIMARY KEY (ciIdx)
 ) COMMENT = '식습관 형성을 위한 식사 습관 형성 첼린지들을 모아두는 테이블';
 
 
@@ -124,7 +128,7 @@ CREATE TABLE CHALLENGE_USER
 (
 	-- 유저 챌린지 인덱스
 	-- 
-	cuId int unsigned NOT NULL AUTO_INCREMENT COMMENT '유저 챌린지 인덱스
+	cuIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '유저 챌린지 인덱스
 ',
 	-- 유저 챌린지 상태
 	-- 
@@ -134,13 +138,15 @@ CREATE TABLE CHALLENGE_USER
 	-- 
 	cuProgress int NOT NULL COMMENT '유저 챌린지 진행도
 ',
+	-- 해당 정보 생성날짜
+	cuCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
 	-- 챌린지 인덱스
 	-- 
-	ciId int NOT NULL COMMENT '챌린지 인덱스
+	ciIdx int NOT NULL COMMENT '챌린지 인덱스
 ',
-	PRIMARY KEY (cuId)
+	PRIMARY KEY (cuIdx)
 ) COMMENT = '유저가 선택한 챌린지가 얼마나 진행되었는지 나타내주는 척도 테이블';
 
 
@@ -149,7 +155,7 @@ CREATE TABLE COMMENT
 (
 	-- 댓글 인덱스
 	-- 
-	coId int NOT NULL AUTO_INCREMENT COMMENT '댓글 인덱스
+	coIdx int NOT NULL AUTO_INCREMENT COMMENT '댓글 인덱스
 ',
 	-- 댓글 내용
 	-- 
@@ -167,10 +173,12 @@ CREATE TABLE COMMENT
 	-- 
 	coDelDate datetime COMMENT '댓글 삭제 날짜
 ',
+	-- 해당 정보 생성 날짜
+	coCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
-	caId int unsigned NOT NULL,
-	PRIMARY KEY (coId)
+	caIdx int unsigned NOT NULL,
+	PRIMARY KEY (coIdx)
 ) COMMENT = '유저가 인증한 챌린지 글에 작성한 댓글을 저장하는 테이블';
 
 
@@ -179,7 +187,7 @@ CREATE TABLE DAILY_SUMMARY
 (
 	-- 일별 요약 인덱스
 	-- 
-	dsId int unsigned NOT NULL AUTO_INCREMENT COMMENT '일별 요약 인덱스
+	dsIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '일별 요약 인덱스
 ',
 	-- 총 섭취 열량 (kcal)
 	-- 
@@ -213,9 +221,11 @@ CREATE TABLE DAILY_SUMMARY
 	-- 
 	dsTotalSodium varchar(20) NOT NULL COMMENT '총 섭취 나트륨 (mg)
 ',
+	-- 해당 정보 생성 날짜
+	dsCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
-	PRIMARY KEY (dsId)
+	PRIMARY KEY (dsIdx)
 ) COMMENT = '유저가 먹은 하루 먹은 음식들의 영양소 수치를 합산해주는 테이블';
 
 
@@ -224,7 +234,7 @@ CREATE TABLE EAT_HISTORY
 (
 	-- 식사 기록 인덱스
 	-- 
-	ehId int unsigned NOT NULL AUTO_INCREMENT COMMENT '식사 기록 인덱스
+	ehIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '식사 기록 인덱스
 ',
 	-- 식사 기록 날짜 
 	-- 
@@ -274,9 +284,11 @@ CREATE TABLE EAT_HISTORY
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
 	-- 일별 요약 인덱스
 	-- 
-	dsId int unsigned NOT NULL COMMENT '일별 요약 인덱스
+	dsIdx int unsigned NOT NULL COMMENT '일별 요약 인덱스
 ',
-	PRIMARY KEY (ehId)
+	-- 해당 정보 생성 날짜
+	ehCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
+	PRIMARY KEY (ehIdx)
 ) COMMENT = '매 끼니 마다 유저가 먹은 음식 내용들을 기록하는 테이블';
 
 
@@ -285,7 +297,7 @@ CREATE TABLE FOOD
 (
 	-- 음식 인덱스
 	-- 
-	fId int unsigned NOT NULL AUTO_INCREMENT COMMENT '음식 인덱스
+	fIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '음식 인덱스
 ',
 	-- 음식 카테고리(분류군)
 	-- 
@@ -331,15 +343,19 @@ CREATE TABLE FOOD
 	-- 
 	fSodium varchar(20) NOT NULL COMMENT '음식 나트륨
 ',
+	-- 해당 정보 생성 날짜
+	-- 
+	fCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜
+',
 	-- 유저가 입력한 영양성분 정보 인덱스
 	-- 
-	mId int NOT NULL COMMENT '유저가 입력한 영양성분 정보 인덱스
+	mIdx int NOT NULL COMMENT '유저가 입력한 영양성분 정보 인덱스
 ',
 	-- 식사 기록 인덱스
 	-- 
-	ehId int unsigned NOT NULL COMMENT '식사 기록 인덱스
+	ehIdx int unsigned NOT NULL COMMENT '식사 기록 인덱스
 ',
-	PRIMARY KEY (fId)
+	PRIMARY KEY (fIdx)
 ) COMMENT = '음식에 대한 예제품목을 입력하고 예제 음식의 기본 영양소 데이터를 받는 테이블';
 
 
@@ -348,7 +364,7 @@ CREATE TABLE GRADE_STANDARD
 (
 	-- 등급 ID
 	-- 
-	gsId int unsigned NOT NULL AUTO_INCREMENT COMMENT '등급 ID
+	gsIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '등급 ID
 ',
 	-- 최소 차이율 (%)
 	-- 
@@ -370,11 +386,13 @@ CREATE TABLE GRADE_STANDARD
 	-- 
 	gsColorCode varchar(10) NOT NULL COMMENT '평가 색상 코드
 ',
+	-- 해당 정보 생성 날짜
+	gsCreateAt datetime NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 식사 기록 인덱스
 	-- 
-	ehId int unsigned NOT NULL COMMENT '식사 기록 인덱스
+	ehIdx int unsigned NOT NULL COMMENT '식사 기록 인덱스
 ',
-	PRIMARY KEY (gsId)
+	PRIMARY KEY (gsIdx)
 ) COMMENT = '건강데이터와 식단데이터를 취합해서 현재 영양상태에 대해 등급을 부여하는 테이블';
 
 
@@ -413,6 +431,8 @@ CREATE TABLE HEALTH_BOARD
 	-- 
 	hbUpdateDate datetime NOT NULL COMMENT '건강정보 게시글 수정 날짜
 ',
+	-- 해당 정보 생성 날짜
+	hbCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
 	PRIMARY KEY (hbId)
@@ -424,7 +444,7 @@ CREATE TABLE HEALTH_RES
 (
 	-- 건강진단기록 인덱스
 	-- 
-	resId int unsigned NOT NULL AUTO_INCREMENT COMMENT '건강진단기록 인덱스
+	resIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '건강진단기록 인덱스
 ',
 	-- 검진년도
 	-- 
@@ -538,9 +558,11 @@ CREATE TABLE HEALTH_RES
 	-- 
 	resOpinion varchar(150) NOT NULL COMMENT '소견
 ',
+	-- 해당 정보 생성 날짜
+	resCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
-	PRIMARY KEY (resId)
+	PRIMARY KEY (resIdx)
 ) COMMENT = '최신 건강검진기록을 받아와서 해당 데이터들을 저장하는 테이블';
 
 
@@ -549,7 +571,7 @@ CREATE TABLE MEAL_RECORD
 (
 	-- 유저가 입력한 영양성분 정보 인덱스
 	-- 
-	mId int NOT NULL AUTO_INCREMENT COMMENT '유저가 입력한 영양성분 정보 인덱스
+	mIdx int NOT NULL AUTO_INCREMENT COMMENT '유저가 입력한 영양성분 정보 인덱스
 ',
 	-- 유저가 입력한 영양성분 정보 기록 날짜
 	-- 
@@ -587,9 +609,11 @@ CREATE TABLE MEAL_RECORD
 	-- 
 	mSodium varchar(20) NOT NULL COMMENT '유저가 입력한 영양성분 나트륨 (mg)
 ',
+	-- 해당 정보 생성날짜
+	mCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성날짜',
 	-- 유저 인덱스
 	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
-	PRIMARY KEY (mId)
+	PRIMARY KEY (mIdx)
 ) COMMENT = '회원이 식단입력 창에서 입력하는 식단의 영양소 데이터를 받는 테이블';
 
 
@@ -598,7 +622,7 @@ CREATE TABLE NUTRITION_STANDARD
 (
 	-- 기준 ID
 	-- 
-	nsId int unsigned NOT NULL AUTO_INCREMENT COMMENT '기준 ID
+	nsIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '기준 ID
 ',
 	-- 적정 섭취 열량 (kcal)
 	-- 
@@ -632,15 +656,19 @@ CREATE TABLE NUTRITION_STANDARD
 	-- 
 	nsSodium varchar(20) NOT NULL COMMENT '적정 섭취 나트륨 (mg)
 ',
+	-- 해당 정보 생성 날짜
+	nsCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 의심질환 ID
 	-- 
-	pdId int unsigned NOT NULL COMMENT '의심질환 ID
+	pdIdx int unsigned NOT NULL COMMENT '의심질환 ID
 ',
 	-- 등급 ID
 	-- 
-	gsId int unsigned NOT NULL COMMENT '등급 ID
+	gsIdx int unsigned NOT NULL COMMENT '등급 ID
 ',
-	PRIMARY KEY (nsId)
+	-- 유저 인덱스
+	uIdx int unsigned NOT NULL COMMENT '유저 인덱스',
+	PRIMARY KEY (nsIdx)
 ) COMMENT = '예제음식과 식단음식의 영양소 데이터를 받아서 현재 회원의 건강상태에 비해 영양 기준이 적절한지 판단하는 기준';
 
 
@@ -649,17 +677,19 @@ CREATE TABLE POSSIBLE_DISEASES
 (
 	-- 의심질환 ID
 	-- 
-	pdId int unsigned NOT NULL AUTO_INCREMENT COMMENT '의심질환 ID
+	pdIdx int unsigned NOT NULL AUTO_INCREMENT COMMENT '의심질환 ID
 ',
 	-- 의심질환 이름
 	-- 
 	pdName varchar(100) NOT NULL COMMENT '의심질환 이름
 ',
+	-- 해당 정보 생성 날짜
+	pdCreateAt datetime NOT NULL COMMENT '해당 정보 생성 날짜',
 	-- 건강진단기록 인덱스
 	-- 
-	resId int unsigned NOT NULL COMMENT '건강진단기록 인덱스
+	resIdx int unsigned NOT NULL COMMENT '건강진단기록 인덱스
 ',
-	PRIMARY KEY (pdId)
+	PRIMARY KEY (pdIdx)
 ) COMMENT = '건강검진기록에서 해당 유저에게 의심질환으로 기록된 데이터를 받는 테이블';
 
 
@@ -722,6 +752,8 @@ CREATE TABLE USER
 	uRole enum('ADMIN','USER') NOT NULL COMMENT '유저 분류
 ENUM(''ADMIN'',''USER'')
 ',
+	-- 해당 정보 생성 날짜
+	uCreateAt datetime DEFAULT NOW(), SYSDATE() NOT NULL COMMENT '해당 정보 생성 날짜',
 	PRIMARY KEY (uIdx),
 	UNIQUE (uId)
 ) COMMENT = '해당 웹 프로그램에 회원가입하는 회원들의 정보를 관리하는 테이블';
@@ -731,88 +763,88 @@ ENUM(''ADMIN'',''USER'')
 /* Create Foreign Keys */
 
 ALTER TABLE COMMENT
-	ADD FOREIGN KEY (caId)
-	REFERENCES CHALLENGE_AUTH (caId)
+	ADD FOREIGN KEY (caIdx)
+	REFERENCES CHALLENGE_AUTH (caIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE CHALLENGE_AUTH
-	ADD FOREIGN KEY (ciId)
-	REFERENCES CHALLENGE_INFO (ciId)
+	ADD FOREIGN KEY (ciIdx)
+	REFERENCES CHALLENGE_INFO (ciIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE CHALLENGE_USER
-	ADD FOREIGN KEY (ciId)
-	REFERENCES CHALLENGE_INFO (ciId)
+	ADD FOREIGN KEY (ciIdx)
+	REFERENCES CHALLENGE_INFO (ciIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE CHALLENGE_AUTH
-	ADD FOREIGN KEY (cuId)
-	REFERENCES CHALLENGE_USER (cuId)
+	ADD FOREIGN KEY (cuIdx)
+	REFERENCES CHALLENGE_USER (cuIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE EAT_HISTORY
-	ADD FOREIGN KEY (dsId)
-	REFERENCES DAILY_SUMMARY (dsId)
+	ADD FOREIGN KEY (dsIdx)
+	REFERENCES DAILY_SUMMARY (dsIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE FOOD
-	ADD FOREIGN KEY (ehId)
-	REFERENCES EAT_HISTORY (ehId)
+	ADD FOREIGN KEY (ehIdx)
+	REFERENCES EAT_HISTORY (ehIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE GRADE_STANDARD
-	ADD FOREIGN KEY (ehId)
-	REFERENCES EAT_HISTORY (ehId)
+	ADD FOREIGN KEY (ehIdx)
+	REFERENCES EAT_HISTORY (ehIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE NUTRITION_STANDARD
-	ADD FOREIGN KEY (gsId)
-	REFERENCES GRADE_STANDARD (gsId)
+	ADD FOREIGN KEY (gsIdx)
+	REFERENCES GRADE_STANDARD (gsIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE POSSIBLE_DISEASES
-	ADD FOREIGN KEY (resId)
-	REFERENCES HEALTH_RES (resId)
+	ADD FOREIGN KEY (resIdx)
+	REFERENCES HEALTH_RES (resIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE FOOD
-	ADD FOREIGN KEY (mId)
-	REFERENCES MEAL_RECORD (mId)
+	ADD FOREIGN KEY (mIdx)
+	REFERENCES MEAL_RECORD (mIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE NUTRITION_STANDARD
-	ADD FOREIGN KEY (pdId)
-	REFERENCES POSSIBLE_DISEASES (pdId)
+	ADD FOREIGN KEY (pdIdx)
+	REFERENCES POSSIBLE_DISEASES (pdIdx)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -883,6 +915,14 @@ ALTER TABLE HEALTH_RES
 
 
 ALTER TABLE MEAL_RECORD
+	ADD FOREIGN KEY (uIdx)
+	REFERENCES USER (uIdx)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE NUTRITION_STANDARD
 	ADD FOREIGN KEY (uIdx)
 	REFERENCES USER (uIdx)
 	ON UPDATE RESTRICT
