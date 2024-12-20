@@ -16,7 +16,7 @@
 				<img class="logo" src="../resources/headerImage/titlelogo1.png">
 				<div class="sidebar" >
 					<a href="#">
-					<div class = "sidebarBackGround p-1">
+					<div class = "sidebarBackGround p-2">
 						<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#CDC8E7" class="bi bi-list" viewBox="0 0 16 16">
 						  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
 						</svg>
@@ -25,13 +25,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="header-bottom">
-			<div class="inner ">
-				<a href="#" class = "home">HOME</a>
-				<a href="#" class = "about">ABOUT</a>
-				<a href="#" class = "healthCheckup">건강진단</a>
-				<a href="#" class = "myprescription"> 내 처방전</a>
-				<a href="#" class = "challengeCommunity">챌린지/커뮤니티</a>
+		<div class="headerBottom py-3">
+			<div class="inner d-flex justify-content-around ">
+				<a href="#" class = "">HOME</a>
+				<a href="#" class = "">ABOUT</a>
+				<a href="#" class = "">건강진단</a>
+				<a href="#" class = "">내 처방전</a>
+				<a href="#" class = "">챌린지/커뮤니티</a>
 			</div>
 		</div>
 	</header>
